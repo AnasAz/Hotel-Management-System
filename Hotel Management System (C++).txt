@@ -1,0 +1,787 @@
+#include<iostream>
+#include<iomanip>
+#include<conio.h>
+#include<windows.h>
+#include<string.h>
+using namespace std;
+/////////////////////////////////////////////////////////////////
+static int sr=0,hr=0,dr=0,ge=0,pr=0;
+////////////////////////////////////////////////////////////////
+class Room{
+	protected:
+		string name,date;
+		int passport;
+		int guests;
+		int rate;
+		int days;
+	public:
+		Room(){}
+		virtual int get_days()=0;
+		friend fetch(Room &r,int pass);
+		friend del(Room &r,int pass);
+};
+class s_room:public Room{
+	private:
+		int room_no;
+		static int sr_cap;
+	public:
+		s_room()
+		{
+			sr_cap++;
+			room_no=sr_cap;
+			rate=3000;
+			days=0;
+		}
+		s_room(string a,string dt,int b,int c,int d)
+		{
+				if (c>1)
+				{
+					guests=1;
+				}
+			name=a;
+			date=dt;
+			passport=b;
+			days=d;
+			//sr_cap++;
+			//room_no=sr_cap;	
+		}
+		s_room(const s_room &obj)
+		{
+			name=obj.name;
+			date=obj.date;
+			passport=obj.passport;
+			guests=obj.guests;
+			room_no=obj.room_no;
+			days=obj.days;	
+		}
+		int get_days()
+		{
+			return days;
+		}
+		friend istream &operator >>(istream &i,s_room &r);
+		friend ostream &operator <<(ostream &o,s_room &r);
+		friend fetch(s_room &r,int pass);
+		friend del(s_room &r,int pass);	
+};
+istream &operator >>(istream &i,s_room &r)
+{
+system("cls");
+cout<<"Please Provide Name: "<<endl;
+i>>r.name;
+cout<<"Please Provide Date : "<<endl;
+i>>r.date;
+cout<<"Please Provide Passport Number: "<<endl;
+i>>r.passport;
+cout<<"Please Provide Number Of Guests: "<<endl;
+i>>r.guests;
+if (r.guests>1)
+r.guests=1;
+cout<<"Please Provide Number Of Days of Stay: "<<endl;
+i>>r.days;
+//r.sr_cap++;
+//r.room_no=sr_cap;
+system("pause");
+return i;
+
+}		
+fetch(s_room &r,int pass)
+{
+if(r.passport==pass)
+{
+cout<<r;
+}
+}
+del(s_room &r,int pass)
+{
+	if(r.passport==pass)
+	{
+		cout<<r;
+		system("pause");
+		r.name="NULL";
+		r.date="NULL";
+		r.passport=0;
+		r.guests=0;
+		r.days=0;
+		cout<<"Record Deleted!"<<endl;
+		system("pause");
+		sr--;
+	}
+}
+ostream &operator <<(ostream &os,s_room &r)
+{
+    system("cls");
+	cout<<"Name: ";
+	os<<r.name;cout<<endl;
+	cout<<"Date: ";
+	os<<r.date;cout<<endl;
+	cout<<"Passport Number: ";
+	os<<r.passport;cout<<endl;
+	cout<<"No. Of Guests: ";
+	os<<r.guests;cout<<endl;
+	cout<<"Room Number: SR-";
+	os<<r.room_no;cout<<endl;
+	cout<<"Number of Days Stay: ";
+	os<<r.days;cout<<endl;
+	cout<<"YOUR TOTAL BILL: ";
+	os<<r.days*r.rate;cout<<endl;
+	system("pause");
+	return os;
+	
+}
+int s_room::sr_cap=0;
+//////////////////////////////
+class d_room:public Room{
+	private:
+		int room_no;
+		static int dr_cap;
+	public:
+		d_room()
+		{
+			dr_cap++;
+			room_no=dr_cap;
+			rate=5000;
+			days=0;
+		}
+		d_room(string a,string dt,int b,int c,int d)
+		{
+				if (c>2)
+				{
+					guests=2;
+				}
+			name=a;
+			date=dt;
+			passport=b;
+			days=d;
+			//sr_cap++;
+			//room_no=sr_cap;	
+		}
+		d_room(const d_room &obj)
+		{
+			name=obj.name;
+			date=obj.date;
+			passport=obj.passport;
+			guests=obj.guests;
+			room_no=obj.room_no;
+			days=obj.days;	
+		}
+		int get_days()
+		{
+			return days;
+		}
+		friend istream &operator >>(istream &i,d_room &rr);
+		friend ostream &operator <<(ostream &o,d_room &rr);
+		friend fetch(d_room &rr,int pass);
+		friend del(d_room &rr,int pass);	
+};
+istream &operator >>(istream &i,d_room &rr)
+{
+system("cls");
+cout<<"Please Provide Name: "<<endl;
+i>>rr.name;
+cout<<"Please Provide Date: "<<endl;
+i>>rr.date;
+cout<<"Please Provide Passport Number: "<<endl;
+i>>rr.passport;
+cout<<"Please Provide Number Of Guests: "<<endl;
+i>>rr.guests;
+if (rr.guests>2)
+rr.guests=2;
+cout<<"Please Provide Number Of Days of Stay: "<<endl;
+i>>rr.days;
+//r.sr_cap++;
+//r.room_no=sr_cap;
+system("pause");
+return i;
+}		
+fetch(d_room &rr,int pass)
+{
+if(rr.passport==pass)
+{
+cout<<rr;
+}
+}
+del(d_room &rr,int pass)
+{
+	if(rr.passport==pass)
+	{
+		cout<<rr;
+		system("pause");
+		rr.name="NULL";
+		rr.date="NULL";
+		rr.passport=0;
+		rr.guests=0;
+		rr.days=0;	
+		cout<<"Record Deleted!"<<endl;
+		dr--;
+		system("pause");
+	}
+	 
+}
+ostream &operator <<(ostream &os,d_room &rr)
+{
+system("cls");
+	cout<<"Name: ";
+	os<<rr.name;cout<<endl;
+	cout<<"Date: ";
+	os<<rr.date;cout<<endl;
+	cout<<"Passport Number: ";
+	os<<rr.passport;cout<<endl;
+	cout<<"No. Of Guests: ";
+	os<<rr.guests;cout<<endl;
+	cout<<"Room Number: DR-";
+	os<<rr.room_no;cout<<endl;
+	cout<<"Number of Days Stay: ";
+	os<<rr.days;cout<<endl;
+	cout<<"YOUR TOTAL BILL: ";
+	os<<rr.days*rr.rate;cout<<endl;
+	system("pause");
+	return os;
+}
+int d_room::dr_cap=0;
+/////////////////////////////////////////////////////////////////
+class ge_suite:public Room{
+	private:
+		int room_no;
+		static int ge_cap;		
+	public:
+		ge_suite()
+		{
+			ge_cap++;
+			room_no=ge_cap;
+			rate=10000;
+			days=0;
+		}
+		ge_suite(string a,string dt,int b,int c,int d)
+		{
+				if (c>3)
+				{
+					guests=3;
+				}
+			name=a;
+			date=dt;
+			passport=b;
+			days=d;	
+		}
+		ge_suite(const ge_suite &obj)
+		{
+			name=obj.name;
+			date=obj.date;
+			passport=obj.passport;
+			guests=obj.guests;
+			room_no=obj.room_no;
+			days=obj.days;	
+		}
+			int get_days()
+		{
+			return days;
+		}
+		friend istream &operator >>(istream &i,ge_suite &r);
+		friend ostream &operator <<(ostream &o,ge_suite &r);
+		friend fetch(ge_suite &r,int pass);
+		friend del(ge_suite &r,int pass);	
+};		
+fetch(ge_suite &r,int pass)
+{
+if(r.passport==pass)
+{
+	cout<<r;
+}
+}
+del(ge_suite &r,int pass)
+{
+	if(r.passport==pass)
+	{
+		cout<<r;
+		system("pause");
+		r.name="NULL";
+		r.date="NULL";
+		r.passport=0;
+		r.guests=0;
+		r.days=0;
+		ge--;
+		cout<<"Record Deleted!"<<endl;
+		system("pause");
+	}
+}
+istream &operator >>(istream &i,ge_suite &r)
+{
+	system("cls");
+cout<<"Please Provide Name: "<<endl;
+i>>r.name;
+cout<<"Please Provide Date: "<<endl;
+i>>r.date;
+cout<<"Please Provide Passport Number: "<<endl;
+i>>r.passport;
+cout<<"Please Provide Number Of Guests: "<<endl;
+i>>r.guests;
+if (r.guests>3)
+r.guests=3;
+cout<<"Please Provide Number Of Days of Stay: "<<endl;
+i>>r.days;
+	system("pause");
+return i;
+}
+ostream &operator <<(ostream &os,ge_suite &r)
+{
+	system("cls");
+	cout<<"Name: ";
+	os<<r.name;cout<<endl;
+	cout<<"Date: ";
+	os<<r.date;cout<<endl;
+	cout<<"Passport Number: ";
+	os<<r.passport;cout<<endl;
+	cout<<"No. Of Guests: ";
+	os<<r.guests;cout<<endl;
+	cout<<"Room Number: GS-";
+	os<<r.room_no;cout<<endl;
+	cout<<"Number of Days Stay: ";
+	os<<r.days;cout<<endl;
+	cout<<"YOUR TOTAL BILL: ";
+	os<<r.days*r.rate;cout<<endl;
+	system("pause");
+	return os;
+}
+int ge_suite::ge_cap=0;
+/////////////////////////////////////////////////////////////////
+class pr_suite:public Room{
+	private:
+		int room_no;
+		static int pr_cap;		
+	public:
+		pr_suite()
+		{
+			pr_cap++;
+			room_no=pr_cap;
+			rate=20000;
+			days=0;
+		}
+		pr_suite(string a,string dt,int b,int c,int d)
+		{
+				if (c>4)
+				{
+					guests=4;
+				}
+			name=a;
+			date=dt;
+			passport=b;
+			days=d;	
+		}
+		pr_suite(const pr_suite &obj)
+		{
+			name=obj.name;
+			date=obj.date;
+			passport=obj.passport;
+			guests=obj.guests;
+			room_no=obj.room_no;
+			days=obj.days;	
+		}
+			int get_days()
+		{
+			return days;
+		}
+		friend istream &operator >>(istream &i,pr_suite &r);
+		friend ostream &operator <<(ostream &o,pr_suite &r);
+		friend fetch(pr_suite &r,int pass);
+		friend del(pr_suite &r,int pass);	
+};		
+fetch(pr_suite &r,int pass)
+{
+if(r.passport==pass)
+{
+	cout<<r;
+}
+}
+del(pr_suite &r,int pass)
+{
+	if(r.passport==pass)
+	{
+		cout<<r;
+		system("pause");
+		r.name="NULL";
+		r.date="NULL";
+		r.passport=0;
+		r.guests=0;
+		r.days=0;
+		pr--;
+		cout<<"Record Deleted!"<<endl;
+		system("pause");
+	}
+}
+istream &operator >>(istream &i,pr_suite &r)
+{
+system("cls");
+cout<<"Please Provide Name: "<<endl;
+i>>r.name;
+cout<<"Please Provide Date: "<<endl;
+i>>r.date;
+cout<<"Please Provide Passport Number: "<<endl;
+i>>r.passport;
+cout<<"Please Provide Number Of Guests: "<<endl;
+i>>r.guests;
+if (r.guests>2)
+r.guests=2;
+cout<<"Please Provide Number Of Days of Stay: "<<endl;
+i>>r.days;
+return i;
+system("pause");
+}
+ostream &operator <<(ostream &os,pr_suite &r)
+{
+	system("cls");
+	cout<<"Name: ";
+	os<<r.name;cout<<endl;
+	cout<<"Date: ";
+	os<<r.date;cout<<endl;
+	cout<<"Passport Number: ";
+	os<<r.passport;cout<<endl;
+	cout<<"No. Of Guests: ";
+	os<<r.guests;cout<<endl;
+	cout<<"Room Number: PS-";
+	os<<r.room_no;cout<<endl;
+	cout<<"Number of Days Stay: ";
+	os<<r.days;cout<<endl;
+	cout<<"YOUR TOTAL BILL: ";
+	os<<r.days*r.rate;cout<<endl;
+	system("pause");
+	return os;
+}
+int pr_suite::pr_cap=0;
+/////////////////////////////////////////////////////////////////
+class hall:public Room{
+	private:
+		int room_no;
+		static int h_cap;
+		string time;
+	public:
+		hall()
+		{
+			h_cap++;
+			room_no=h_cap;
+			rate=30000;
+			days=0;
+		}
+		hall(string a,string dt,int b,int c,int d)
+		{
+				if (c>150)
+				{
+					guests=150;
+				}
+			name=a;
+			date=dt;
+			passport=b;
+			days=d;	
+		}
+		hall(const hall &obj)
+		{
+			name=obj.name;
+			date=obj.date;
+			passport=obj.passport;
+			guests=obj.guests;
+			room_no=obj.room_no;
+			days=obj.days;
+			time=obj.time;	
+		}
+			int get_days()
+		{
+			return days;
+		}
+		friend istream &operator >>(istream &i,hall &r);
+		friend ostream &operator <<(ostream &o,hall &r);
+		friend fetch(hall &r,int pass);
+		friend del(hall &r,int pass);
+};
+istream &operator >>(istream &i,hall &r)
+{
+system("cls");
+cout<<"Please Provide Name: "<<endl;
+i>>r.name;
+cout<<"Please Provide Date: "<<endl;
+i>>r.date;
+cout<<"Please Provide Passport Number: "<<endl;
+i>>r.passport;
+cout<<"Please Provide Number Of Guests: "<<endl;
+i>>r.guests;
+if (r.guests>150)
+r.guests=150;
+cout<<"Please Provide Time: "<<endl;
+i>>r.time;
+cout<<"Please Provide Number Of Booking Days: "<<endl;
+i>>r.days;
+system("pause");
+return i;
+}		
+fetch(hall &r,int pass)
+{
+if(r.passport==pass)
+{
+cout<<r;
+}
+}
+del(hall &r,int pass)
+{
+	if(r.passport==pass)
+	{
+		cout<<r;
+		system("pause");
+		r.name="NULL";
+		r.date="NULL";
+		r.passport=0;
+		r.guests=0;
+		r.days=0;
+		r.time="NULL";
+		hr--;
+		cout<<"Record Deleted!"<<endl;
+		system("pause");
+	}
+}
+ostream &operator <<(ostream &os,hall &r)
+{
+	system("cls");
+	cout<<"Name: ";
+	os<<r.name;cout<<endl;
+	cout<<"Date: ";
+	os<<r.date;cout<<endl;
+	cout<<"Passport Number: ";
+	os<<r.passport;cout<<endl;
+	cout<<"No. Of Guests: ";
+	os<<r.guests;cout<<endl;
+	cout<<"Room Number: HR-";
+	os<<r.room_no;cout<<endl;
+	cout<<"Number of Booking Days: ";
+	os<<r.days;cout<<endl;
+	cout<<"Time: ";
+	os<<r.time;cout<<endl;
+	cout<<"YOUR TOTAL BILL: ";
+	os<<r.days*r.rate;cout<<endl;
+	system("pause");
+	return os;
+}
+int hall::h_cap=0;
+/////////////////////////////////////////////////////////////////
+int main()
+{
+	system("color 3f");
+	s_room r1[20];
+	d_room r2[15];
+	ge_suite r3[10];
+	pr_suite r4[5];
+	hall r5[3];
+	int pass,choice;int i,alloc;
+	while(choice!=9)
+	{
+	system("cls");
+	cout<<"     \t\t* Hotel Management System * "<<endl<<endl;
+	cout<<"     \t\t ' Welcome to our hotel ' "<<endl<<endl<<endl;
+	cout<<"\t\t\t*Main Menu*"<<endl<<endl;
+	cout<<"\t\t1. Single Room"<<endl;
+	cout<<"\t\t2. Double Room"<<endl;
+	cout<<"\t\t3. General Suite"<<endl;
+    cout<<"\t\t4. Presidential Suite"<<endl;
+    cout<<"\t\t5. Banquet Hall"<<endl;
+    cout<<"\t\t6. Delete Room"<<endl;
+    cout<<"\t\t7. Find Room"<<endl;
+    cout<<"\t\t8. Details"<<endl;
+    cout<<"\t\t9. Exit"<<endl;
+    cout<<"\nEnter your choice : ";
+    cin>>choice;
+
+    switch(choice)
+    {
+    case 1:
+	//cin>>r1;
+	//cout<<r1;
+	system("color 8f");
+	cout<<"Assigning new room"<<endl;
+	for(i=0;i<20;i++)
+	{
+		if(sr==20)
+		{
+			system("cls");
+			cout<<"ALL SINGLE ROOMS ARE BOOKED!"<<endl;
+			system("pause");
+			break;
+		}
+		alloc=r1[i].get_days();
+		if(alloc==0)
+		{
+			cin>>r1[i];
+			cout<<r1[i];		
+			sr++;
+			break;	
+		}	
+	}
+	system("color 3f");
+	break;
+	case 2:
+	//cin>>r2;
+	//cout<<r2;
+	system("color 8f");
+	cout<<"Assigning new room"<<endl;
+	for(i=0;i<15;i++)
+	{
+		if(dr==15)
+		{
+			system("cls");
+			cout<<"ALL DOUBLE ROOMS ARE BOOKED!"<<endl;
+			system("pause");
+			break;
+		}
+		alloc=r2[i].get_days();
+		if(alloc==0)
+		{
+			cin>>r2[i];
+			cout<<r2[i];		
+			dr++;
+			break;
+		}
+	}
+		system("color 3f");
+	break;
+	case 3:
+		system("color 8f");
+		cout<<"Assigning new room"<<endl;
+	for(i=0;i<10;i++)
+	{
+		if(ge==10)
+		{
+			system("cls");
+			cout<<"ALL GENERAL SUITES ARE BOOKED!"<<endl;
+			system("pause");
+			break;
+		}
+		alloc=r3[i].get_days();
+		if(alloc==0)
+		{
+			cin>>r3[i];
+			cout<<r3[i];		
+			ge++;
+			break;
+		}	
+	}
+	system("color 3f");
+	break;
+	case 4:
+		system("color 8f");
+		cout<<"Assigning new room"<<endl;
+	for(i=0;i<5;i++)
+	{
+			if(pr==5)
+		{
+			system("cls");
+			cout<<"ALL PRESIDENTIAL SUITES ARE BOOKED!"<<endl;
+			system("pause");
+			break;
+		}
+		alloc=r4[i].get_days();
+		if(alloc==0)
+		{
+			cin>>r4[i];
+			cout<<r4[i];		
+			pr++;
+			break;
+		}
+	}
+	system("color 3f");
+	break;
+	case 5:
+		system("color 8f");
+			cout<<"Assigning new hall"<<endl;
+	for(i=0;i<3;i++)
+	{
+			if(hr==3)
+		{
+			system("cls");
+			cout<<"ALL BANQUET HALLS ARE BOOKED!"<<endl;
+			system("pause");
+			break;
+		}
+		alloc=r5[i].get_days();
+		if(alloc==0)
+		{
+			cin>>r5[i];
+			cout<<r5[i];		
+			hr++;
+			break;
+		}
+	}
+	system("color 3f");
+	break;
+	case 6:
+	system("color 8f");
+	system("cls");
+	cout<<"Enter passport to delete the room"<<endl;
+	cin>>pass;
+	for(i=0;i<20;i++)
+	{
+		del(r1[i],pass);
+	}
+	for(i=0;i<15;i++)
+	{
+		del(r2[i],pass);	
+	}
+	for(i=0;i<10;i++)
+	{
+		del(r3[i],pass);	
+	}
+	for(i=0;i<5;i++)
+	{
+		del(r4[i],pass);	
+	}
+	for(i=0;i<3;i++)
+	{
+		del(r5[i],pass);	
+	} 
+	//find_del_sr(r1,pass);
+	//find_del_sr(r2,pass);
+	system("color 3f");
+	break;
+	case 7:
+		system("color 8f");
+	system("cls");
+	cout<<"Enter passport to find the room"<<endl;
+	cin>>pass;
+	//find_sr(r2,pass);
+	//find_sr(r1,pass);
+	for(i=0;i<20;i++)
+	{
+		fetch(r1[i],pass);
+	}
+	for(i=0;i<15;i++)
+	{
+		fetch(r2[i],pass);	
+	}
+	for(i=0;i<10;i++)
+	{
+		fetch(r3[i],pass);
+	}
+	for(i=0;i<5;i++)
+	{
+		fetch(r4[i],pass);
+	}
+	for(i=0;i<3;i++)
+	{
+		fetch(r5[i],pass);
+	}
+	system("color 3f");
+    break;
+    case 8:
+    	system("color 8f");
+    	system("cls");
+    	cout<<"\t\t\t** Details **\n\n";
+    	cout<<" \t\t\t* Single Room *\n\n\t\t\t- Rs. 3000 Per Day\n\t\t\t- One Small Bed\n\t\t\t- Air Conditioner\n\t\t\t- Attach Bathroom\n\n";
+		cout<<" \t\t\t* Double Room *\n\n\t\t\t- Rs. 5000 Per Day\n\t\t\t- Two Small Bed\n\t\t\t- Air Conditioner\n\t\t\t- Attach Bathroom\n\n";
+		cout<<" \t\t\t* General Suite *\n\n\t\t\t- Rs. 10,000 Per Day\n\t\t\t- Two Queen Size Bed\n\t\t\t- Air Conditioner\n\t\t\t- Attach Bathroom\n\n";
+		cout<<" \t\t\t* Presidential Suite *\n\n\t\t\t- Rs. 20,000 Per Day\n\t\t\t- Two King Size Bed\n\t\t\t- Air Conditioner\n\t\t\t- Attach Bathroom\n\n";
+		cout<<" \t\t\t* Banquet Hall *\n\n\t\t\t- Rs. 30,000 Per Day\n\t\t\t- 150 Maximum Capacity\n\t\t\t- Air Conditioned\n\t\t\t- Hi-Tea\n\n";
+    	system("pause");
+    	system("color 3f");
+    	break;
+    default:
+    system("cls");
+    system("color 8f");
+    cout<<"\n\n\n\n\n\t\t\t\t\t\t** Thank You! **\n\n\n\n\n";
+    exit(0);
+}
+}
+	return 0;
+}
